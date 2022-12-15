@@ -1,0 +1,22 @@
+float sinal; // Signal read variable
+
+void setup() {
+ // initialize the serial communication:
+  Serial.begin(9600);
+  pinMode(19, INPUT); // Setup for leads off detection LO +
+  pinMode(18, INPUT); // Setup for leads off detection LO -
+  pinMode(4, INPUT);  // Setup for OutPut
+}
+
+void loop() {
+  int value1, value2;
+  value1 = 1700;
+  value2 = 2100;
+  sinal = analogRead(4);
+  Serial.print(value1);
+  Serial.print(",");
+  Serial.print(value2);
+  Serial.print(",");
+  Serial.print("Sinal:");
+  Serial.println(sinal);
+}
