@@ -1,0 +1,41 @@
+#include <OneWire.h>            //Bibliotecas necessárias para o tipo de sensor usado
+#include <DallasTemperature.h>
+
+#define DS18B20 5  //entrada sensor: pino 5 digital
+
+OneWire oneWire(DS18B20);
+DallasTemperature Sensor(&oneWire);
+
+const int Buzzer = 18;  // entrada buzzer: 18 - digital
+float leitura;          //variável de leitura do valor obtido pelo sensor
+
+void setup() {
+  Serial.begin(115200);
+
+  Sensor.begin();
+  pinMode(Buzzer, OUTPUT);
+}
+
+void loop() {
+
+  Sensor.requestTemperatures();
+
+  leitura = Sensor.getTempCByIndex(0);
+
+  Serial.print(leitura);
+  Serial.println("°C");
+  Serial.println("---------------------------------");
+
+  if (leitura > 37.30) {         // setado como 37,3ºC- temperatura de estado febril
+    digitalWrite(Buzzer, HIGH);  //aciona o buzer
+
+  } else {
+    digitalWrite(Buzzer, LOW);
+  }
+
+
+  //Mostra os valores no Serial Plotter
+  Serial.print(" ");
+
+  delay(50);
+}
