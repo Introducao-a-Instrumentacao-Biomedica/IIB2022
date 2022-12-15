@@ -1,0 +1,26 @@
+int sensorPin = A0;
+int sensorValue = 0;
+float zero = 0;
+float media=0;
+float value=0;
+float pontos=93;
+int i;
+void setup() {
+    for(i=0;i<pontos;i++){
+    value = analogRead(sensorPin);
+    media=media+value;
+  }
+  zero = (media)/pontos;
+  Serial.begin(9600);
+}
+
+void loop() {
+  sensorValue = analogRead(sensorPin);    
+  if(sensorValue>550){
+    Serial.println(abs(sensorValue-zero));
+  }
+  if(sensorValue<500){
+    Serial.println(abs(sensorValue-zero));
+  }
+  //delay(1000);
+}
