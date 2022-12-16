@@ -1,0 +1,27 @@
+// Codigo para balança com 4 celulas de cargas utilizando um aplificador HN711 e um ESP32
+
+#include "HX711.h"									//Biblioteca do amplificador
+
+#define DT 18			
+#define SCK 19
+ 
+HX711 escala;    // Relaciona a variável escala
+ 
+void setup() {
+  escala.begin (DT, SCK);
+  Serial.begin(9600);
+  Serial.print("Leitura da Tara:  ");
+  Serial.println(escala.read());  							//Aguarda o termino de verificação do peso
+  Serial.println("Aguarde!");
+  Serial.println("Iniciando ...");
+  escala.set_scale(784175);             						// Utiliza uma escala padrão de verificação
+ 
+  escala.tare(0.360);                							// Fixa o peso como tara
+  Serial.println("Insira o item para pesar:"); 
+}
+ 
+void loop() {
+  Serial.print("Valor da Leitura:  ");
+  Serial.println(escala.get_value(10), 3);  					// Retorna peso descontando a tara
+  delay(100);
+}
